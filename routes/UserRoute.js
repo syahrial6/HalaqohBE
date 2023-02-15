@@ -15,7 +15,7 @@ router.get('/users', verifyUser,adminOnly,getUser)
 
 router.get('/users/beranda',getUser)
 
-router.get('/users/:id',verifyUser,adminOnly,getUserById)
+router.get('/users/:id',getUserById)
 
 
 router.post('/users',verifyUser,adminOnly,createUser)

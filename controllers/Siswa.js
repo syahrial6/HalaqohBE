@@ -56,7 +56,7 @@ export const getSiswaberanda = async(req,res) =>{
         let response;
         if (req.role==="admin"){
             response = await siswa.findAll({
-                attributes:["uuid","name","kelas","hafalan","createdAt","ayat","updatedAt"],
+                attributes:["uuid","id","name","kelas","hafalan","createdAt","ayat","updatedAt"],
                 include:[{
                     model: user,
                     attributes:["name","email"]
@@ -91,24 +91,24 @@ export const getSiswaById = async(req,res) =>{
         let response;
         if (req.role==="admin"){
             response = await siswa.findOne({
-                attributes:["uuid","name","kelas","hafalan","createdAt","ayat","updatedAt"],
+                attributes:["uuid","id","name","kelas","hafalan","createdAt","ayat","updatedAt"],
                 where: {
                     id: Siswa.id
                 },
                 include:[{
                     model: user,
-                    attributes:["name","email"]
+                    attributes:["name","email","id"]
                 }]
             })
         }else{
             response = await siswa.findOne({
-                attributes:["uuid","name","kelas","hafalan","ayat","createdAt"],
+                attributes:["uuid","id","name","kelas","hafalan","ayat","createdAt"],
                 where:{
                     [Op.and]:[{id:Siswa.id},{userId:req.userId}]
                 },
                 include:[{
                     model: user,
-                    attributes:["name","email"]
+                    attributes:["name","email","id"]
                 }]
             })
         }
@@ -123,13 +123,13 @@ export const getSiswaByIdguru = async(req,res) =>{
     try {
         let response;
             response = await siswa.findAll({
-                attributes:["uuid","name","kelas","hafalan","ayat","updatedAt"],
+                attributes:["uuid","id","name","kelas","hafalan","ayat","updatedAt"],
                 where:{
                     userId: req.params.id
                 },
                 include:[{
                     model: user,
-                    attributes:["name","email"]
+                    attributes:["name","email","uuid"]
                 }]
             })
         
@@ -166,16 +166,16 @@ export const updateSiswa = async(req,res) =>{
             }
         });
         if (!Siswa) return res.status(404).json({msg:"Data tidak ada"})
-        const {name,kelas,hafalan,ayat} = req.body
+        const {name,kelas,hafalan,ayat,userId} = req.body
         if (req.role==="admin"){
-            await siswa.update({name,kelas,hafalan,ayat},{
+            await siswa.update({name,kelas,hafalan,ayat,userId},{
                 where:{
                     id:Siswa.id
                 }
                 })
         }else{
             if(req.userId!==Siswa.userId) return res.status(403).json({msg:"Akses Dilarang"})
-            await siswa.update({name,kelas,hafalan,ayat},{
+            await siswa.update({name,kelas,hafalan,ayat,userId},{
                 where:{
                     [Op.and]:[{id:Siswa.id},{userId:req.userId}]
                 }

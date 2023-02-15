@@ -5,9 +5,14 @@ import dotenv from "dotenv";
 import UserRoute from "./routes/UserRoute.js"
 import SiswaRoute from "./routes/SiswaRoute.js"
 import SurahRoute from "./routes/SurahRoute.js";
+import HistoryRoute from "./routes/HistoryRoute.js"
 import db from "./config/Database.js";
 import AuthRoute from "./routes/AuthRoute.js"
 import SequelizeStore from "connect-session-sequelize";
+import history from "./models/History.js";
+
+
+// kalau mau buat tabel baru jangan lupa file diimport disini
 
 
 dotenv.config()
@@ -20,8 +25,8 @@ const store = new session_store({
 });
 
 
-// (async()=>{
-//     await db.sync();
+// (async() => {
+//         await db.sync();
 // })();
 
 app.use(session({
@@ -47,6 +52,7 @@ app.use(UserRoute);
 app.use(SiswaRoute);
 app.use(AuthRoute);
 app.use(SurahRoute);
+app.use(HistoryRoute);
 
 // store.sync();
 
