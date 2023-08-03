@@ -6,16 +6,20 @@ import {
     updateSiswa,
     deleteSiswa,
     getSiswaByIdguru,
+    getSiswa2,
+    getSiswaberanda
 } from "../controllers/Siswa.js"
 import { verifyUser } from "../middleware/AuthUser.js";
 
 const router = express.Router();
 
 router.get('/siswa',verifyUser,getSiswa)
+router.get('/siswa2',verifyUser,getSiswa2)
 
 router.get('/view/siswa',getSiswa)
 
-router.get('/siswa/:id',verifyUser,getSiswaById)
+router.get('/siswa/:id',getSiswaById)
+router.get('/beranda/siswa/:id',getSiswaberanda)
 router.get('/guru/siswa/:id',getSiswaByIdguru)
 
 

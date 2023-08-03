@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import session from "express-session";
+import fileUpload from "express-fileupload";
 import dotenv from "dotenv";
 import UserRoute from "./routes/UserRoute.js"
 import SiswaRoute from "./routes/SiswaRoute.js"
@@ -9,10 +10,9 @@ import HistoryRoute from "./routes/HistoryRoute.js"
 import db from "./config/Database.js";
 import AuthRoute from "./routes/AuthRoute.js"
 import SequelizeStore from "connect-session-sequelize";
-import history from "./models/History.js";
 
 
-// kalau mau buat tabel baru jangan lupa file diimport disini
+
 
 
 dotenv.config()
@@ -47,7 +47,11 @@ app.use(cors({
 
 
 
+
+
 app.use(express.json());
+app.use(fileUpload())
+app.use(express.static("public"))
 app.use(UserRoute);
 app.use(SiswaRoute);
 app.use(AuthRoute);

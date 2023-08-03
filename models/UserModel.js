@@ -14,7 +14,7 @@ const user = db.define('users',{
     },
     name:{
         type:DataTypes.STRING,
-        allowNull:false,
+        allowNull:true,
         validate:{
             notEmpty:true,
             len:[3,100]
@@ -28,12 +28,11 @@ const user = db.define('users',{
             len:[3,100]
         }
     },
-    email:{
+    npycode:{
         type:DataTypes.STRING,
         allowNull:false,
         validate:{
             notEmpty:true,
-            isEmail:true
         }
     },
     password:{
